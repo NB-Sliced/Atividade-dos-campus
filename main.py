@@ -1,54 +1,62 @@
 from Ufc.lista_de_campos import (
     cadastrar_campus,
     procurar_campus,
-    adicionar_curso_ao_campus,
-    remover_curso_do_campus,
     consultar_campos
 )
 
+def adicionar_curso_ao_campus(nome_campus, nome_curso):
+    campus = procurar_campus(nome_campus)
+    if campus:
+        campus.adicionar_curso(nome_curso)
+    else:
+        print(f"Campus '{nome_campus}' não encontrado.\n")
+
+def remover_curso_do_campus(nome_campus, nome_curso):
+    campus = procurar_campus(nome_campus)
+    if campus:
+        campus.remover_curso(nome_curso)
+    else:
+        print(f"Campus '{nome_campus}' não encontrado.\n")
+
+
 def menu():
     while True:
-        print("===== MENU UFC =====")
-        print("1 - Cadastrar Campus")
-        print("2 - Procurar Campus")
-        print("3 - Adicionar Curso")
-        print("4 - Remover Curso")
-        print("5 - Consultar Campus e Cursos")
-        print("0 - Sair")
+        print("""
+===== MENU PRINCIPAL =====
+1- Cadastrar Campus
+2- Adicionar Curso a um Campus
+3- Remover Curso de um Campus
+4- Consultar todos os Campus e Cursos
+5- Sair
+==========================
+""")
 
-        opc = input("Escolha uma opção: ")
+        opcao = input("Escolha uma opção: ")
 
-        if opc == "1":
-            nome = input("Nome do novo campus: ")
+        if opcao == "1":
+            nome = input("Digite o nome do novo campus: ")
             cadastrar_campus(nome)
 
-        elif opc == "2":
-            nome = input("Nome do campus para procurar: ")
-            campus = procurar_campus(nome)
-            if campus:
-                print(f"Campus encontrado: {campus['nome']}")
-            else:
-                print("Campus não encontrado.\n")
+        elif opcao == "2":
+            nome_campus = input("Nome do campus: ")
+            nome_curso = input("Nome do curso a adicionar: ")
+            adicionar_curso_ao_campus(nome_campus, nome_curso)
 
-        elif opc == "3":
-            nome = input("Nome do campus: ")
-            curso = input("Nome do curso a adicionar: ")
-            adicionar_curso_ao_campus(nome, curso)
+        elif opcao == "3":
+            nome_campus = input("Nome do campus: ")
+            nome_curso = input("Nome do curso a remover: ")
+            remover_curso_do_campus(nome_campus, nome_curso)
 
-        elif opc == "4":
-            nome = input("Nome do campus: ")
-            curso = input("Nome do curso a remover: ")
-            remover_curso_do_campus(nome, curso)
-
-        elif opc == "5":
+        elif opcao == "4":
             consultar_campos()
 
-        elif opc == "0":
-            print("Saindo do sistema...")
+        elif opcao == "5":
+            print("Saindo...")
             break
 
         else:
-            print("Opção inválida.\n")
+            print("Opção inválida. Tente novamente.\n")
+
 
 if __name__ == "__main__":
     menu()
